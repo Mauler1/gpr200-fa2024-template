@@ -74,7 +74,7 @@ int main() {
 		helloTriangleShader.use();
 
 		//set time uniform
-		helloTriangleShader.setInt("uTime", time);
+		helloTriangleShader.setFloat("uTime", time);
 
 		glBindVertexArray(VAO);
 
