@@ -9,7 +9,7 @@
 namespace arout {
 	class Shader {
 		//program ID
-		unsigned int ID;
+		unsigned int id;
 
 		// constructor
 		Shader(const char* vertexPath, const char* fragmentPath);
