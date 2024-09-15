@@ -6,6 +6,7 @@
 #include <ew/ewMath/ewMath.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
+#include <arout/shader.cpp>
 
 const int SCREEN_WIDTH = 1080;
 const int SCREEN_HEIGHT = 720;
@@ -16,32 +17,9 @@ float vertices[] = {
 	 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
 	 0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f
 };
-const char* vertexShaderSource = R"(
-#version 330 core
-layout (location = 0) in vec3 aPos;
-layout (location = 1) in vec4 aColor;
-out vec4 Color; //Varying
-uniform float uTime;
-void main()
-{
-	Color = aColor; //pass-through
-	vec3 pos = aPos;
-	pos.y += (sin(uTime*10 + pos.x)/4);
-    gl_Position = vec4(pos.x, pos.y, pos.z, 1.0);
-}
-)";
+const char* vertexShaderSource = "assets/vertexShader.vert";
 
-const char* fragmentShaderSource = R"(
-#version 330 core
-out vec4 FragColor;
-in vec4 Color;
-uniform float uTime;
-uniform vec4 uColor = vec4(1.0);
-void main()
-{
-    FragColor = Color  * (sin(uTime) * 0.5 + 0.5);
-} 
-)";
+const char* fragmentShaderSource = "assets/fragmentShader.frag";
 
 
 
@@ -62,6 +40,9 @@ int main() {
 		return 1;
 	}
 	//Initialization goes here!
+
+	arout::Shader helloTriangleShader(vertexShaderSource, fragmentShaderSource);
+
 	unsigned int VAO;
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
@@ -80,39 +61,6 @@ int main() {
 	glEnableVertexAttribArray(1);
 
 
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(vertexShader);
-
-	int  success;
-	char infoLog[512];
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-
-	if (!success)
-	{
-		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-	}
-
-	//fragment shader
-	unsigned int fragmentShader;
-	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	glCompileShader(fragmentShader);
-	//error checking here
-
-	//shader program
-	unsigned int shaderProgram;
-	shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-	glUseProgram(shaderProgram);
-	//error checking put herre
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
-
 	//Render loop
 	while (!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
@@ -123,11 +71,10 @@ int main() {
 		glClearColor(0.3f, 0.4f, 0.9f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glUseProgram(shaderProgram);
+		helloTriangleShader.use();
 
 		//set time uniform
-		int timeLoc = glGetUniformLocation(shaderProgram, "uTime");
-		glUniform1f(timeLoc, time);
+		helloTriangleShader.setInt("uTime", time);
 
 		glBindVertexArray(VAO);
 

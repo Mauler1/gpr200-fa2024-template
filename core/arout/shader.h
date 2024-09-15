@@ -11,6 +11,7 @@ namespace arout {
 		//program ID
 		unsigned int id;
 
+	public:
 		// constructor
 		Shader(const char* vertexPath, const char* fragmentPath);
 
