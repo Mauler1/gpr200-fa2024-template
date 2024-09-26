@@ -4,6 +4,7 @@
 
 #include <ew/external/glad.h>
 #include <ew/ewMath/ewMath.h>
+#include <ew/external/stb_image.cpp>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <arout/shader.cpp>
@@ -86,9 +87,10 @@ int main() {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	int width, height, nrChannels;
-	unsigned char* data = stbi_load("graphicWineWall.png", &width, &height, &nrChannels, 0);
+	stbi_set_flip_vertically_on_load(true);
+	unsigned char* data = stbi_load("assets/graphicWineWall.png", &width, &height, &nrChannels, 0);
 	if (data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else {
@@ -97,7 +99,7 @@ int main() {
 	stbi_image_free(data);
 
 	//	texture attribute
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(sizeof(float) * 7);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(sizeof(float)*7));
 	glEnableVertexAttribArray(2);
 
 
@@ -117,6 +119,10 @@ int main() {
 		//set time uniform
 		helloTriangleShader.setFloat("uTime", time);
 
+		glBindVertexArray(VAO);
+
+		// bind texture
+		glBindTexture(GL_TEXTURE_2D, texture);
 		glBindVertexArray(VAO);
 
 		//draw call
