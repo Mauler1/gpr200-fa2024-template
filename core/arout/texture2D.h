@@ -2,7 +2,6 @@
 
 #include "../ew/external/glad.h"
 #include "../ew/external/stb_image.cpp"
-#include "../ew/external/stb_image.h"
 #include <string>
 #include <fstream>
 #include <sstream>

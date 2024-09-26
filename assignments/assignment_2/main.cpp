@@ -4,7 +4,6 @@
 
 #include <ew/external/glad.h>
 #include <ew/ewMath/ewMath.h>
-#include <ew/external/stb_image.cpp>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <arout/shader.cpp>
