@@ -8,6 +8,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <arout/shader.cpp>
+#include <arout/texture2D.cpp>
 
 const int SCREEN_WIDTH = 1080;
 const int SCREEN_HEIGHT = 720;
@@ -26,9 +27,13 @@ unsigned int indices[] = {
 };
 
 
-const char* vertexShaderSource = "assets/vertexShader.vert";
+const char* characterVertexShaderSource = "assets/characterVertexShader.vert";
 
-const char* fragmentShaderSource = "assets/fragmentShader.frag";
+const char* characterFragmentShaderSource = "assets/characterFragmentShader.frag";
+
+const char* bgImageSource = "assets/winebrennerWall.jpg";
+
+const char* fgImageSource = "assets/graphicWineWall.png";
 
 
 
@@ -50,7 +55,7 @@ int main() {
 	}
 	//Initialization goes here!
 
-	arout::Shader helloTriangleShader(vertexShaderSource, fragmentShaderSource);
+	arout::Shader CharacterShader(characterVertexShaderSource, characterFragmentShaderSource);
 
 	unsigned int VAO;
 	glGenVertexArrays(1, &VAO);
@@ -78,25 +83,7 @@ int main() {
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	//	texture
-	unsigned int texture;
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	//set texture parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	int width, height, nrChannels;
-	stbi_set_flip_vertically_on_load(true);
-	unsigned char* data = stbi_load("assets/graphicWineWall.png", &width, &height, &nrChannels, 0);
-	if (data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else {
-		std::cout << "Failed to load texture" << std::endl;
-	}
-	stbi_image_free(data);
+	arout::Texture2D characterImage(fgImageSource);
 
 	//	texture attribute
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(sizeof(float)*7));
@@ -114,15 +101,13 @@ int main() {
 		glClearColor(0.3f, 0.4f, 0.9f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		helloTriangleShader.use();
+		CharacterShader.use();
 
 		//set time uniform
-		helloTriangleShader.setFloat("uTime", time);
-
-		glBindVertexArray(VAO);
+		CharacterShader.setFloat("uTime", time);
 
 		// bind texture
-		glBindTexture(GL_TEXTURE_2D, texture);
+		characterImage.use();
 		glBindVertexArray(VAO);
 
 		//draw call
