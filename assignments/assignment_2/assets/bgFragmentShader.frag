@@ -16,7 +16,7 @@ void main()
     }
     vec4 texColor = texture(tex, TexCoord*8);
     
-    texColor.r = uv.y - 0.1;
+    texColor.r = uv.y;
     texColor.g = uv.y + 0.3;
     texColor.b = uv.y + 0.95;
 
