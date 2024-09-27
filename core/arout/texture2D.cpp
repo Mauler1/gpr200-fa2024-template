@@ -3,7 +3,8 @@
 namespace arout {
 	unsigned int textureID;
 
-	Texture2D::Texture2D(const char* texturePath, int filterMode, int wrapMode) {
+	Texture2D::Texture2D(const char* texturePath, int filterMode, int wrapMode, unsigned int id) {
+		textureID = id;
 		glGenTextures(1, &textureID);
 		glBindTexture(GL_TEXTURE_2D, textureID);
 		//set texture parameters
@@ -24,7 +25,7 @@ namespace arout {
 		stbi_image_free(data);
 	}
 
-	void Texture2D::bind(unsigned int slot) {
-		glBindTexture(GL_TEXTURE_2D, slot);
+	void Texture2D::bind() {
+		glBindTexture(GL_TEXTURE_2D, textureID);
 	}
 }
