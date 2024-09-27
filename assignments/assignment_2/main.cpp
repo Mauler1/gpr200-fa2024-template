@@ -59,7 +59,9 @@ int main() {
 	//Initialization goes here!
 
 	arout::Shader CharacterShader(characterVertexShaderSource, characterFragmentShaderSource);
+	arout::Texture2D characterImage(fgImageSource, GL_NEAREST, GL_REPEAT);
 	arout::Shader BGShader(bgVertexShaderSource, bgFragmentShaderSource);
+	//arout::Texture2D bgImage(bgImageSource, GL_NEAREST, GL_REPEAT);
 
 	unsigned int VAO;
 	glGenVertexArrays(1, &VAO);
@@ -88,10 +90,6 @@ int main() {
 
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(sizeof(float)*7));
     glEnableVertexAttribArray(2);
-
-	//	texture
-	//arout::Texture2D bgImage(bgImageSource, GL_NEAREST, GL_REPEAT);
-	arout::Texture2D characterImage(fgImageSource, GL_NEAREST, GL_REPEAT);
 
 
 	//Render loop
