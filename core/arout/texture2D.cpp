@@ -3,14 +3,14 @@
 namespace arout {
 	unsigned int textureID;
 
-	Texture2D::Texture2D(const char* texturePath) {
+	Texture2D::Texture2D(const char* texturePath, int filterMode, int wrapMode) {
 		glGenTextures(1, &textureID);
 		glBindTexture(GL_TEXTURE_2D, textureID);
 		//set texture parameters
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapMode);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filterMode);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filterMode);
 		int width, height, nrChannels;
 		stbi_set_flip_vertically_on_load(true);
 		unsigned char* data = stbi_load(texturePath, &width, &height, &nrChannels, 0);
@@ -24,7 +24,7 @@ namespace arout {
 		stbi_image_free(data);
 	}
 
-	void Texture2D::use() {
-		glBindTexture(GL_TEXTURE_2D, textureID);
+	void Texture2D::bind(unsigned int slot) {
+		glBindTexture(GL_TEXTURE_2D, slot);
 	}
 }

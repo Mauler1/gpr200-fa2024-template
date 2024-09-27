@@ -30,6 +30,10 @@ const char* characterVertexShaderSource = "assets/characterVertexShader.vert";
 
 const char* characterFragmentShaderSource = "assets/characterFragmentShader.frag";
 
+const char* bgVertexShaderSource = "assets/bgVertexShader.vert";
+
+const char* bgFragmentShaderSource = "assets/bgFragmentShader.frag";
+
 const char* bgImageSource = "assets/winebrennerWall.jpg";
 
 const char* fgImageSource = "assets/graphicWineWall.png";
@@ -55,6 +59,7 @@ int main() {
 	//Initialization goes here!
 
 	arout::Shader CharacterShader(characterVertexShaderSource, characterFragmentShaderSource);
+	arout::Shader BGShader(bgVertexShaderSource, bgFragmentShaderSource);
 
 	unsigned int VAO;
 	glGenVertexArrays(1, &VAO);
@@ -81,13 +86,12 @@ int main() {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-	//	texture
-	arout::Texture2D characterImage(fgImageSource);
-
-	//	texture attribute
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(sizeof(float)*7));
-	glEnableVertexAttribArray(2);
+    glEnableVertexAttribArray(2);
 
+	//	texture
+	//arout::Texture2D bgImage(bgImageSource, GL_NEAREST, GL_REPEAT);
+	arout::Texture2D characterImage(fgImageSource, GL_NEAREST, GL_REPEAT);
 
 
 	//Render loop
@@ -100,13 +104,20 @@ int main() {
 		glClearColor(0.3f, 0.4f, 0.9f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		BGShader.use();
+		BGShader.setFloat("uTime", time);
+		//bgImage.bind(0);
+		glBindVertexArray(VAO);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		
+
 		CharacterShader.use();
 
 		//set time uniform
 		CharacterShader.setFloat("uTime", time);
 
 		// bind texture
-		characterImage.use();
+		characterImage.bind(1);
 		glBindVertexArray(VAO);
 
 		//draw call

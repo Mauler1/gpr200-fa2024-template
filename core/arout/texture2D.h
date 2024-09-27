@@ -10,10 +10,11 @@
 namespace arout {
 	class Texture2D {
 		unsigned int textureID;
+		int m_width, m_height;
 
 	public:
-		Texture2D(const char* texturePath);
+		Texture2D(const char* texturePath, int filterMode, int wrapMode);
 
-		void use();
+		void bind(unsigned int slot=0);
 	};
 }
