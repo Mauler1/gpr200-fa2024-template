@@ -13,7 +13,7 @@ namespace arout {
 		int m_width, m_height;
 
 	public:
-		Texture2D(const char* texturePath, int filterMode, int wrapMode, unsigned int id);
+		Texture2D(const char* texturePath, int filterMode, int wrapMode, int format);
 
 		void bind();
 	};
