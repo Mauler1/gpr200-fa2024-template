@@ -11,8 +11,10 @@ uniform sampler2D tex;
 void main()
 {
     vec2 uv = 2.0 * TexCoord;
-    for(float i = 1.0; i < 8.0; i++){
+    for(float i = 1.0; i < 6.0; i++){
         uv.y += i * 0.1 / i * sin(uv.x * i * i + uTime * 0.5) * sin(uv.y * i * i + uTime * 0.5);
+        uv.y += sin(uTime * i);
+        uv.x += cos(uTime * i);
     }
     vec4 texColor = texture(tex, TexCoord*8);
 

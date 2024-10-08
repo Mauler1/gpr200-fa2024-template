@@ -59,9 +59,9 @@ int main() {
 	//Initialization goes here!
 
 	arout::Shader CharacterShader(characterVertexShaderSource, characterFragmentShaderSource);
-	arout::Texture2D characterImage(fgImageSource, GL_NEAREST, GL_REPEAT, 0);
+	arout::Texture2D characterImage(fgImageSource, GL_NEAREST, GL_REPEAT, GL_RGBA);
 	arout::Shader BGShader(bgVertexShaderSource, bgFragmentShaderSource);
-	//arout::Texture2D bgImage(bgImageSource, GL_NEAREST, GL_REPEAT, 0);
+	arout::Texture2D bgImage(bgImageSource, GL_NEAREST, GL_REPEAT, GL_RGB);
 	//	^^ problem with this guy >:(
 
 	unsigned int VAO;
@@ -105,7 +105,7 @@ int main() {
 
 		BGShader.use();
 		BGShader.setFloat("uTime", time);
-		//bgImage.bind();
+		bgImage.bind();
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		
