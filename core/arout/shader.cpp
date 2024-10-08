@@ -96,4 +96,8 @@ namespace arout {
 		{
 			glUniform1f(glGetUniformLocation(id, name.c_str()), value);
 		}
+		void Shader::setMat4(const std::string& name, const glm::mat4& m) const
+		{
+			glUniformMatrix4fv(glGetUniformLocation(id, name.cstr()), 1, GL_FALSE, &m[0][0]);
+		}
 	};

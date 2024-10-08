@@ -19,7 +19,7 @@ add_library(core STATIC ${CORE_SRC} ${CORE_INC} "arout/texture2D.h" "arout/textu
 
 find_package(OpenGL REQUIRED)
 
-target_link_libraries(core PUBLIC IMGUI)
+target_link_libraries(core PUBLIC IMGUI glm)
 
 install (TARGETS core DESTINATION lib)
 install (FILES ${CORE_INC} DESTINATION include/core)

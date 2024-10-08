@@ -61,7 +61,7 @@ int main() {
 	arout::Shader CharacterShader(characterVertexShaderSource, characterFragmentShaderSource);
 	arout::Texture2D characterImage(fgImageSource, GL_NEAREST, GL_REPEAT, 0);
 	arout::Shader BGShader(bgVertexShaderSource, bgFragmentShaderSource);
-	//arout::Texture2D bgImage(bgImageSource, GL_NEAREST, GL_REPEAT, 1);
+	//arout::Texture2D bgImage(bgImageSource, GL_NEAREST, GL_REPEAT, 0);
 	//	^^ problem with this guy >:(
 
 	unsigned int VAO;

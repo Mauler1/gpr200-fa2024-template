@@ -17,7 +17,7 @@ void main()
     vec4 texColor = texture(tex, TexCoord*8);
 
     for(float i = 1.0; i < 8.0; i++){
-        texColor = texture(tex, TexCoord * uv);
+        texColor = texture(tex, TexCoord * uv * 10 + uTime);
     }
     
     //texColor.r = uv.y - 0.1;
