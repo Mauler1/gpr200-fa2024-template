@@ -11,5 +11,5 @@ void main()
 	//vec4 pos = vec4(aPos, 1.0);
 	//mat4 M = translate(1.0, 2.0, 1.5) * rotateZ(radians(uTime * 90.0)) * scale(2.0, 1.0, 1.0);
 	//pos = M * pos;
-    gl_Position = _Model * vec4(apos, 1.0);
+    gl_Position = _Model * vec4(aPos, 1.0);
 }

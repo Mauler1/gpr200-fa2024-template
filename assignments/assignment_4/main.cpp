@@ -23,7 +23,7 @@ glm::mat4 scale(float x, float y, float z) {
 		x, 0.0, 0.0, 0.0,
 		0.0, y, 0.0, 0.0,
 		0.0, 0.0, z, 0.0,
-		0.0, 0.0, 0.0, 1.0;
+		0.0, 0.0, 0.0, 1.0
 	);
 }
 glm::mat4 rotateZ(float a) {
@@ -33,8 +33,8 @@ glm::mat4 rotateZ(float a) {
 	m[0][1] = sin(a);
 	m[1][1] = cos(a);
 	m[2][2] = 1;
-	m[3][3] = 1
-		return m;
+	m[3][3] = 1;
+    return m;
 }
 
 glm::mat4 translate(float x, float y, float z) {
