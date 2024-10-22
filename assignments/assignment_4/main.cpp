@@ -6,6 +6,8 @@
 #include <ew/ewMath/ewMath.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <arout/shader.cpp>
 
 const int SCREEN_WIDTH = 1080;
@@ -104,9 +106,23 @@ int main() {
 		//set time uniform
 		helloTriangleShader.setFloat("uTime", time);
 
+        //model matrix
+        glm::mat4 model = glm::mat4(1.0f);
+        //view matrix
+        glm::mat4 view = glm::mat4(1.0f);
+        view = glm::translate(view,glm::vec3(0.0f, 0.0f, -3.0f));
+        //projection matrix
+        glm::mat4 projection;
+        projection = glm::perspective(glm::radians(45.0f), 800.0f/600.0f, 0.1f, 100.0f);
+
+        helloTriangleShader.setMat4("_Model", model);
+        helloTriangleShader.setMat4("_View", view);
+        helloTriangleShader.setMat4("_Projection", projection);
+
 		glBindVertexArray(VAO);
 
-		glm::mat4 model = glm::mat4(1);
+
+        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 		model = scale(2.0f, 1.0f, 1.0f) * model;
 		model = translate(cosf(time), sinf(time), 0.0f) * model;
 		helloTriangleShader.setMat4("_Model", model);
