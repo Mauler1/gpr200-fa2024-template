@@ -24,7 +24,7 @@ float yaw = -90.0f;
 float pitch = 0.0f;
 float lastX = SCREEN_WIDTH / 2.0f;
 float lastY = SCREEN_HEIGHT / 2.0f;
-float fov = 45.0f;
+float fov = 60.0f;
 
 
 float deltaTime = 0.0f;	// Time between current frame and last frame
@@ -75,16 +75,28 @@ float vertices[] = {
 };
 
 glm::vec3 cubePositions[] = {
-        glm::vec3( 0.0f,  0.0f,  0.0f),
-        glm::vec3( 2.0f,  5.0f, -15.0f),
-        glm::vec3(-1.5f, -2.2f, -2.5f),
-        glm::vec3(-3.8f, -2.0f, -12.3f),
-        glm::vec3( 2.4f, -0.4f, -3.5f),
-        glm::vec3(-1.7f,  3.0f, -7.5f),
-        glm::vec3( 1.3f, -2.0f, -2.5f),
-        glm::vec3( 1.5f,  2.0f, -2.5f),
-        glm::vec3( 1.5f,  0.2f, -1.5f),
-        glm::vec3(-1.3f,  1.0f, -1.5f)
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
+        glm::vec3( ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f))
+        //oh beloved professor eric winebrenner do not kill me for not using a loop
 };
 
 glm::mat4 scale(float x, float y, float z) {
@@ -133,6 +145,11 @@ void processInput(GLFWwindow *window)
         cameraPos += cameraSpeed * cameraUp;
     if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
         cameraPos -= cameraSpeed * cameraUp;
+    //idk how to do this man
+    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+        cameraSpeed = 5.0f * deltaTime;
+    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
+        cameraSpeed = 2.5f * deltaTime;
 }
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos){
@@ -167,6 +184,15 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos){
     cameraFront = glm::normalize(direction);
 }
 
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+    fov -= (float)yoffset;
+    if (fov < 1.0f)
+        fov = 1.0f;
+    if (fov > 120.0f)
+        fov = 120.0f;
+}
+
 const char* vertexShaderSource = "assets/vertexShader.vert";
 
 const char* fragmentShaderSource = "assets/fragmentShader.frag";
@@ -188,6 +214,7 @@ int main() {
 	}
 	glfwMakeContextCurrent(window);
     glfwSetCursorPosCallback(window, mouse_callback);
+    glfwSetScrollCallback(window, scroll_callback);
 	if (!gladLoadGL(glfwGetProcAddress)) {
 		printf("GLAD Failed to load GL headers");
 		return 1;
@@ -239,7 +266,7 @@ int main() {
 
         //projection matrix
         glm::mat4 projection;
-        projection = glm::perspective(glm::radians(45.0f), (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 0.1f, 1000.0f);
+        projection = glm::perspective(glm::radians(fov), (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 0.1f, 1000.0f);
         cubeShader.setMat4("_Projection", projection);
 
 		//set time uniform
@@ -254,12 +281,12 @@ int main() {
         cubeShader.setMat4("_View", view);
 
 		glBindVertexArray(VAO);
-        for(unsigned int i = 0; i < 10; i++){
+        for(unsigned int i = 0; i < 20; i++){
             glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model, cubePositions[i]);
-            model = scale((sin(time) + 1.5f)/5.0f, (cos(time) + 1.5f)/5.0f, (sin(time) + 1.5f)/5.0f) * model;
-            model = glm::rotate(model, time * glm::radians(20.0f * (i+1.0f)), glm::vec3(1.0f, 0.3f, 0.5f));
-            model = translate(cosf(time)/5.0f, sinf(time)/5.0f, 0.0f) * model;
+            model = scale((sin(deltaTime) + 1.5f)/5.0f, (cos(deltaTime) + 1.5f)/5.0f, (sin(deltaTime) + 1.5f)/5.0f) * model;
+            model = glm::rotate(model, (deltaTime+1)/deltaTime * glm::radians(20.0f * (i+1.0f)), glm::vec3(1.0f, 0.3f, 0.5f));
+            //model = translate(cosf(time)/5.0f, sinf(time)/5.0f, 0.0f) * model;
             cubeShader.setMat4("_Model", model);
 
             //draw call
