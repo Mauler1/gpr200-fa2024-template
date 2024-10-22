@@ -9,6 +9,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <arout/shader.cpp>
+#include <arout/texture2D.cpp>
 
 const int SCREEN_WIDTH = 1080;
 const int SCREEN_HEIGHT = 720;
@@ -57,6 +58,19 @@ float vertices[] = {
         -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 };
 
+glm::vec3 cubePositions[] = {
+        glm::vec3( 0.0f,  0.0f,  0.0f),
+        glm::vec3( 2.0f,  5.0f, -15.0f),
+        glm::vec3(-1.5f, -2.2f, -2.5f),
+        glm::vec3(-3.8f, -2.0f, -12.3f),
+        glm::vec3( 2.4f, -0.4f, -3.5f),
+        glm::vec3(-1.7f,  3.0f, -7.5f),
+        glm::vec3( 1.3f, -2.0f, -2.5f),
+        glm::vec3( 1.5f,  2.0f, -2.5f),
+        glm::vec3( 1.5f,  0.2f, -1.5f),
+        glm::vec3(-1.3f,  1.0f, -1.5f)
+};
+
 glm::mat4 scale(float x, float y, float z) {
 	return glm::mat4(
 		x, 0.0, 0.0, 0.0,
@@ -88,6 +102,8 @@ const char* vertexShaderSource = "assets/vertexShader.vert";
 
 const char* fragmentShaderSource = "assets/fragmentShader.frag";
 
+const char* cubeImageSource = "assets/freakbob.png";
+
 
 
 int main() {
@@ -108,7 +124,8 @@ int main() {
 	}
 	//Initialization goes here!
 
-	arout::Shader helloTriangleShader(vertexShaderSource, fragmentShaderSource);
+	arout::Shader cubeShader(vertexShaderSource, fragmentShaderSource);
+    arout::Texture2D cubeImage(cubeImageSource, GL_NEAREST, GL_REPEAT, GL_RGB);
 
     glEnable(GL_DEPTH_TEST);
 
@@ -137,38 +154,37 @@ int main() {
 		float time = (float)glfwGetTime();
 
 		//Clear framebuffer
-		glClearColor(0.3f, 0.4f, 0.9f, 1.0f);
+		glClearColor(1.0f, 1.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		helloTriangleShader.use();
+        cubeImage.bind();
+		cubeShader.use();
 
 		//set time uniform
-		helloTriangleShader.setFloat("uTime", time);
+		cubeShader.setFloat("uTime", time);
 
-        //model matrix
-        glm::mat4 model = glm::mat4(1.0f);
         //view matrix
         glm::mat4 view = glm::mat4(1.0f);
         view = glm::translate(view,glm::vec3(0.0f, 0.0f, -3.0f));
         //projection matrix
         glm::mat4 projection;
-        projection = glm::perspective(glm::radians(45.0f), 800.0f/600.0f, 0.1f, 100.0f);
+        projection = glm::perspective(glm::radians(60.0f), 800.0f/600.0f, 0.1f, 1000.0f);
 
-        helloTriangleShader.setMat4("_Model", model);
-        helloTriangleShader.setMat4("_View", view);
-        helloTriangleShader.setMat4("_Projection", projection);
+        cubeShader.setMat4("_View", view);
+        cubeShader.setMat4("_Projection", projection);
 
 		glBindVertexArray(VAO);
+        for(unsigned int i = 0; i < 10; i++){
+            glm::mat4 model = glm::mat4(1.0f);
+            model = glm::translate(model, cubePositions[i]);
+            model = scale((sin(time) + 1.5f)/2.0f, (cos(time) + 1.5f)/2.0f, (sin(time) + 1.5f)/2.0f) * model;
+            model = glm::rotate(model, (float)glfwGetTime() * glm::radians(20.0f * (i+1.0f)), glm::vec3(1.0f, 0.3f, 0.5f));
+            model = translate(cosf(time), sinf(time), 0.0f) * model;
+            cubeShader.setMat4("_Model", model);
 
-
-        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-		model = scale(2.0f, 1.0f, 1.0f) * model;
-        model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-        //model = translate(cosf(time), sinf(time), 0.0f) * model;
-		helloTriangleShader.setMat4("_Model", model);
-
-		//draw call
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+            //draw call
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
 
 		//Drawing happens here!
 		glfwSwapBuffers(window);
