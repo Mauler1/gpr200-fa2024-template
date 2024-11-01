@@ -235,6 +235,8 @@ int main() {
     arout::Shader cubeShader(vertexShaderSource, fragmentShaderSource);
     arout::Texture2D cubeImage(cubeImageSource, GL_NEAREST, GL_REPEAT, GL_RGB);
 
+    arout::Shader lightShader(lightVertexSource, lightFragmentSource);
+
     //mouse capture
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -316,6 +318,8 @@ int main() {
             //draw call
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
+
+        
 
         //imgui start
         ImGui_ImplGlfw_NewFrame();
