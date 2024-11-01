@@ -195,6 +195,10 @@ const char* vertexShaderSource = "assets/vertexShader.vert";
 
 const char* fragmentShaderSource = "assets/fragmentShader.frag";
 
+const char* lightVertexSource = "assets/lightVertShader.vert";
+
+const char* lightFragmentSource = "assets/lightFragShader.frag";
+
 const char* cubeImageSource = "assets/freakbob.png";
 
 
@@ -240,9 +244,17 @@ int main() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    // RGBA color
+    // TEX coords
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(sizeof(float) * 3));
     glEnableVertexAttribArray(1);
+
+    unsigned int lightVAO;
+    glGenVertexArrays(1, &lightVAO);
+    glBindVertexArray(lightVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
 
     //Render loop
     while (!glfwWindowShouldClose(window)) {
