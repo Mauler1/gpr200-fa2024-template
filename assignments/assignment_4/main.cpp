@@ -238,7 +238,7 @@ int main() {
     arout::Shader lightCubeShader(lightVertexSource, lightFragmentSource);
 
     //mouse capture
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
     glEnable(GL_DEPTH_TEST);
 
@@ -284,7 +284,7 @@ int main() {
 
         //lighting variables
         glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
-        float ambeientStrength = 0.1f;
+        float ambientStrength = 0.1f;
         float diffuseK = 0.0f;
         float specularStrength = 0.5;
         float shininess = 32.0f;
@@ -327,7 +327,7 @@ int main() {
             cubeShader.setMat4("_Model", model);
             cubeShader.setVec3("lightColor", lightColor);
             cubeShader.setVec3("lightPos", lightPos);
-            cubeShader.setFloat("ambientStrength", ambeientStrength);
+            cubeShader.setFloat("ambientStrength", ambientStrength);
             cubeShader.setVec3("viewPos", cameraPos);
             cubeShader.setFloat("diffuseK", diffuseK);
             cubeShader.setFloat("specularK", specularStrength);
@@ -358,7 +358,12 @@ int main() {
 
         //imgui window
         ImGui::Begin("Settings");
-        ImGui::Text("test test");
+        ImGui::DragFloat3("Light Position", &lightPos.x, 0.1f);
+        ImGui::ColorEdit3("Light Color", &lightColor.r);
+        ImGui::SliderFloat("Ambient K", &ambientStrength, 0.0f, 1.0f);
+        ImGui::SliderFloat("Diffuse K", &diffuseK, 0.0f, 1.0f);
+        ImGui::SliderFloat("Specular K", &specularStrength, 0.0f, 1.0f);
+        ImGui::SliderFloat("Shininess", &shininess, 2.0f, 1024.0f);
         ImGui::End();
 
         ImGui::Render();
