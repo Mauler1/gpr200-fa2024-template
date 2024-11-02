@@ -190,6 +190,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
     }
     else{
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        firstMouse = true;
     }
 }
 
