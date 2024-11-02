@@ -80,27 +80,27 @@ float vertices[] = {
 };
 
 glm::vec3 cubePositions[] = {
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f)),
-        glm::vec3(ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f),  ew::RandomRange(-15.0f, 15.0f))
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f)),
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f)),
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f)),
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f)),
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f)),
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f)),
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f)),
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f)),
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f)),
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f)),
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f)),
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f)),
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f)),
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f)),
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f)),
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f)),
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f)),
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f)),
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f)),
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f)),
+        glm::vec3(ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f),  ew::RandomRange(-10.0f, 10.0f))
         //oh beloved professor eric winebrenner do not kill me for not using a loop
 };
 
@@ -285,6 +285,9 @@ int main() {
         //lighting variables
         glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
         float ambeientStrength = 0.1f;
+        float diffuseK = 0.0f;
+        float specularStrength = 0.5;
+        float shininess = 32.0f;
 
         //light source cube
         glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
@@ -325,6 +328,10 @@ int main() {
             cubeShader.setVec3("lightColor", lightColor);
             cubeShader.setVec3("lightPos", lightPos);
             cubeShader.setFloat("ambientStrength", ambeientStrength);
+            cubeShader.setVec3("viewPos", cameraPos);
+            cubeShader.setFloat("diffuseK", diffuseK);
+            cubeShader.setFloat("specularK", specularStrength);
+            cubeShader.setFloat("shininess", shininess);
 
             //draw call
             glDrawArrays(GL_TRIANGLES, 0, 36);
