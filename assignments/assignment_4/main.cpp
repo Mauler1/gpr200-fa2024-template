@@ -156,8 +156,7 @@ void processInput(GLFWwindow* window)
 }
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
-    if (firstMouse)
-    {
+    if (firstMouse) {
         lastX = xpos;
         lastY = ypos;
         firstMouse = false;
@@ -180,11 +179,18 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
     if (pitch < -89.0f)
         pitch = -89.0f;
 
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_2)) {
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
     glm::vec3 direction;
     direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
     direction.y = sin(glm::radians(pitch));
     direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
     cameraFront = glm::normalize(direction);
+    }
+    else{
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    }
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
@@ -221,6 +227,7 @@ int main() {
     }
     glfwMakeContextCurrent(window);
     glfwSetCursorPosCallback(window, mouse_callback);
+    //glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
     if (!gladLoadGL(glfwGetProcAddress)) {
         printf("GLAD Failed to load GL headers");
@@ -271,6 +278,16 @@ int main() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
+    //lighting variables
+    glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
+    float ambientStrength = 0.1f;
+    float diffuseK = 0.0f;
+    float specularStrength = 0.5;
+    float shininess = 32.0f;
+
+    //light source cube
+    glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
+
     //Render loop
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
@@ -281,16 +298,6 @@ int main() {
         lastFrame = currentFrame;
 
         float time = (float)glfwGetTime();
-
-        //lighting variables
-        glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
-        float ambientStrength = 0.1f;
-        float diffuseK = 0.0f;
-        float specularStrength = 0.5;
-        float shininess = 32.0f;
-
-        //light source cube
-        glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
 
         //Clear framebuffer
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
