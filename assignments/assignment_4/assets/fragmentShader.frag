@@ -6,6 +6,10 @@ in vec3 Normal;
 
 uniform float uTime;
 uniform sampler2D tex;
+uniform vec3 lightColor;
+uniform vec3 lightPos;
+uniform float ambientStrength;
+
 void main()
 {
     vec4 texColor = texture(tex, TexPos);
@@ -13,5 +17,6 @@ void main()
         discard;
     }
     vec3 normal = normalize(Normal);
-    FragColor = texColor;
+    vec3 ambient = ambientStrength * lightColor;
+    FragColor = (texColor * vec4(ambient, 1.0));
 } 

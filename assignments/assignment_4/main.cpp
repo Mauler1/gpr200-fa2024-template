@@ -214,7 +214,7 @@ int main() {
         printf("GLFW failed to init!");
         return 1;
     }
-    GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Hello Triangle", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "freak lighting", NULL, NULL);
     if (window == NULL) {
         printf("GLFW failed to create window");
         return 1;
@@ -235,7 +235,7 @@ int main() {
     arout::Shader cubeShader(vertexShaderSource, fragmentShaderSource);
     arout::Texture2D cubeImage(cubeImageSource, GL_NEAREST, GL_REPEAT, GL_RGB);
 
-    arout::Shader lightShader(lightVertexSource, lightFragmentSource);
+    arout::Shader lightCubeShader(lightVertexSource, lightFragmentSource);
 
     //mouse capture
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -256,7 +256,7 @@ int main() {
     glEnableVertexAttribArray(0);
 
     // TEX coords
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(sizeof(float) * 3));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(sizeof(float) * 3));
     glEnableVertexAttribArray(1);
 
     //cube normals
@@ -268,7 +268,7 @@ int main() {
     glBindVertexArray(lightVAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
     //Render loop
@@ -282,9 +282,15 @@ int main() {
 
         float time = (float)glfwGetTime();
 
+        //lighting variables
+        glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
+        float ambeientStrength = 0.1f;
 
+        //light source cube
+        glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
+        
         //Clear framebuffer
-        glClearColor(1.0f, 1.0f, 0.0f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         cubeImage.bind();
@@ -306,20 +312,37 @@ int main() {
         view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
         cubeShader.setMat4("_View", view);
 
+        glm::mat4 model = glm::mat4(1.0f);
+
         glBindVertexArray(VAO);
         for (unsigned int i = 0; i < 20; i++) {
-            glm::mat4 model = glm::mat4(1.0f);
+            model = glm::mat4(1.0f);
             model = glm::translate(model, cubePositions[i]);
             model = scale((sin(deltaTime) + 1.5f) / 5.0f, (cos(deltaTime) + 1.5f) / 5.0f, (sin(deltaTime) + 1.5f) / 5.0f) * model;
-            model = glm::rotate(model, (deltaTime + 1) / deltaTime * glm::radians(20.0f * (i + 1.0f)), glm::vec3(1.0f, 0.3f, 0.5f));
+            model = glm::rotate(model, time * glm::radians(20.0f * (i + 1.0f)), glm::vec3(1.0f, 0.3f, 0.5f));
             //model = translate(cosf(time)/5.0f, sinf(time)/5.0f, 0.0f) * model;
             cubeShader.setMat4("_Model", model);
+            cubeShader.setVec3("lightColor", lightColor);
+            cubeShader.setVec3("lightPos", lightPos);
+            cubeShader.setFloat("ambientStrength", ambeientStrength);
 
             //draw call
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
-        
+        lightCubeShader.use();
+        lightCubeShader.setMat4("projection", projection);
+        lightCubeShader.setMat4("view", view);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, lightPos);
+        model = scale(model, glm::vec3(0.2f));
+        lightCubeShader.setMat4("model", model);
+        lightCubeShader.setVec3("lightColor", lightColor);
+
+        glBindVertexArray(lightVAO);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
 
         //imgui start
         ImGui_ImplGlfw_NewFrame();
